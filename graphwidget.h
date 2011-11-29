@@ -19,6 +19,7 @@ protected:
     void keyPressEvent(QKeyEvent *event);
     LevelManager* level_manager_;
     Level* main_level_;
+    QGraphicsScene* scene;
     //void timerEvent(QTimerEvent *event);
     //void drawBackground(QPainter *painter, const QRectF &rect);
 

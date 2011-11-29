@@ -13,7 +13,7 @@ GraphWidget::GraphWidget(QWidget *parent) :
 
   level_manager_->WriteLevel("test_level.xml", test_level);
 
-  QGraphicsScene *scene = new QGraphicsScene(this);
+  scene = new QGraphicsScene(this);
   scene->setItemIndexMethod(QGraphicsScene::NoIndex);
   scene->setSceneRect(-200, -200, 400, 400);
   setScene(scene);
@@ -37,7 +37,10 @@ void GraphWidget::LoadMainLevel(const Level &main_level)
 {
   main_level_ = new Level(main_level);
   foreach(GameObject* game_object, main_level_->objects_)
+  {
     game_object->SetGraphWidget(this);
+    scene->addItem(game_object);
+  }
 }
 
 void GraphWidget::keyPressEvent(QKeyEvent *event)
