@@ -8,7 +8,12 @@ class LevelManager
 public:
     LevelManager();
 
-    Level GetLevel(int index);
+    bool GetLevel(int index, Level & level);
+
+    bool ReadLevel(const QString & file, Level & level);
+
+    void WriteLevel(const Level & level);
+
     void AddLevel(const Level & level);
 };
 

@@ -5,6 +5,8 @@ HEADERS += \
     level.h \
     levelmanager.h
 
+QT += xml
+
 SOURCES += \
     main.cpp \
     graphwidget.cpp \

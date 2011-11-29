@@ -4,13 +4,13 @@ GameObject::GameObject()
 {
 }
 
-GameObject::GameObject(QPointF center, QBitmap image)
+GameObject::GameObject(QPointF center, QPolygonF skeleton)
 {
   center_ = center;
-  image_ = image;
+  skeleton_ = skeleton;
 }
 
-int GameObject::reflectBeam(QLineF beam, QLineF *resultBeam) const
+int GameObject::reflectBeam(QLineF beam, QPolygonF *beamPath) const
 {
   return 0;
 }
