@@ -15,6 +15,8 @@ public:
     int WriteLevel(const QString& file_name, const Level& level);
 
     void AddLevel(const Level& level);
+
+    Level create_test_level();
 };
 
 #endif // LEVELMANAGER_H

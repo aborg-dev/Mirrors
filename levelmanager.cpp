@@ -117,3 +117,26 @@ int LevelManager::ReadLevel(const QString& file_name, Level& level)
 
   return 1;
 }
+
+Level LevelManager::create_test_level()
+{
+  Level test_level;
+  test_level.name_ = "Test_Level";
+  GameObject* reflector = new GameObject();
+  reflector->center_ = QPointF(1.0, 1.0);
+  reflector->body_.push_back(QPointF(5, 3));
+  reflector->body_.push_back(QPointF(1, 4));
+  reflector->body_.push_back(QPointF(9, 2));
+  reflector->body_.push_back(QPointF(5, 3));
+
+  GameObject* absorber = new GameObject();
+  absorber->center_ = QPointF(3.0, -1.0);
+  absorber->body_.push_back(QPointF(0, 44));
+  absorber->body_.push_back(QPointF(3, 13));
+  absorber->body_.push_back(QPointF(5, 23));
+
+  test_level.objects_.push_back(reflector);
+  test_level.objects_.push_back(absorber);
+
+  return test_level;
+}
