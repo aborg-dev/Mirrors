@@ -9,13 +9,13 @@ class GameObject
 {
 public:
     GameObject();
-    GameObject(QPointF center, QPolygonF skeleton);
+    GameObject(QPointF center, QPolygonF body);
 
-    static const QString class_name_ = "GameObject";
+    static const QString class_name_;
     QPointF center_;
-    QPolygonF skeleton_;
+    QPolygonF body_;
 
-    virtual int reflectBeam(QLineF beam, QLineF * resultBeam) const;
+    virtual int reflectBeam(QLineF beam, QPolygonF * beamPath) { return -1; }
 
 };
 

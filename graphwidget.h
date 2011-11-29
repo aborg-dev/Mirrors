@@ -3,6 +3,8 @@
 
 #include <QGraphicsView>
 
+#include "levelmanager.h"
+
 class GraphWidget : public QGraphicsView
 {
     Q_OBJECT
@@ -13,6 +15,7 @@ public:
 
 protected:
     void keyPressEvent(QKeyEvent *event);
+    LevelManager *level_manager_;
     //void timerEvent(QTimerEvent *event);
     //void drawBackground(QPainter *painter, const QRectF &rect);
 

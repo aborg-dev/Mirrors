@@ -1,16 +1,13 @@
 #include "gameobject.h"
 
+const QString GameObject::class_name_ = "GameObject";
+
 GameObject::GameObject()
 {
 }
 
-GameObject::GameObject(QPointF center, QPolygonF skeleton)
+GameObject::GameObject(QPointF center, QPolygonF body)
 {
   center_ = center;
-  skeleton_ = skeleton;
-}
-
-int GameObject::reflectBeam(QLineF beam, QPolygonF *beamPath) const
-{
-  return 0;
+  body_ = body;
 }
