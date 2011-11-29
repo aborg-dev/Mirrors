@@ -9,7 +9,7 @@ public:
     Level();
 
     QString name_;
-    QVector<GameObject> objects_;
+    QVector<GameObject*> objects_;
 
 };
 
