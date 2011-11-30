@@ -3,8 +3,6 @@
 #include <QPainter>
 #include <QPainterPath>
 
-const QString GameObject::class_name_ = "GameObject";
-
 GameObject::GameObject()
 {
 }

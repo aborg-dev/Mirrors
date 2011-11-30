@@ -14,7 +14,7 @@ QDomElement GameObjectToNode(QDomDocument& d, const GameObject& game_object)
 {
   QDomElement node = d.createElement("object");
 
-  node.setAttribute("type", game_object.class_name_);
+  node.setAttribute("type", game_object.class_name());
   node.setAttribute("X", game_object.center_.x());
   node.setAttribute("Y", game_object.center_.y());
 
@@ -122,7 +122,7 @@ Level LevelManager::create_test_level()
 {
   Level test_level;
   test_level.name_ = "Test_Level";
-  GameObject* reflector = new GameObject();
+  GameObject* reflector = new Reflector();
   reflector->center_ = QPointF(1.0, 1.0);
   reflector->body_.push_back(QPointF(50, 30));
   reflector->body_.push_back(QPointF(10, 40));

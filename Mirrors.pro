@@ -3,7 +3,8 @@ HEADERS += \
     mainwidget.h \
     gameobject.h \
     level.h \
-    levelmanager.h
+    levelmanager.h \
+    reflector.h
 
 QT += xml
 
@@ -13,7 +14,8 @@ SOURCES += \
     mainwidget.cpp \
     gameobject.cpp \
     level.cpp \
-    levelmanager.cpp
+    levelmanager.cpp \
+    reflector.cpp
 
 OTHER_FILES += \
     TODO.txt
