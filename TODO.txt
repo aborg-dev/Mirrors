@@ -1,15 +1,6 @@
 
 
-Think about level syntax and about level code parser.
-Something like simple lines with object constructors
-and some additional options like available objects for player.
-
-Find out how to store levels in database. (some files with special syntax or simple .cpp file
-with creation of objects).
-
 Add interface to add levels through level manager.
-
-Add LoadLevel to graphwidget(or create GameEngine and store everything there)
 
 Find out how to use qt resourse files and try to paint pictures of some objects on the graphwidget.
 

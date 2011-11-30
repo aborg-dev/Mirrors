@@ -6,6 +6,9 @@
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent)
 {
+    //setMinimumSize(400, 400);
+    setWindowTitle(tr("Mirrors"));
+
     QVBoxLayout *layout = new QVBoxLayout();
     QPushButton *start_button = new QPushButton("start");
     QPushButton *options_button = new QPushButton("options");

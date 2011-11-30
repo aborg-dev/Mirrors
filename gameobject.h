@@ -13,20 +13,30 @@ public:
     GameObject();
     GameObject(QPointF center, QPolygonF body);
 
-    static const QString class_name_;
     QPointF center_;
     QPolygonF body_;
     GraphWidget *graph_widget_;
 
     void SetGraphWidget(GraphWidget* graph_widget);
 
-    QRectF boundingRect() const;
+    virtual QRectF boundingRect() const;
 
-    QPainterPath shape() const;
+    virtual QPainterPath shape() const;
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    virtual int reflectBeam(QLineF beam, QPolygonF * beamPath) { return -1; }
+    // 0 - No intersection
+    // 1 - intersect
+    // 2 - absorb
+    // 3 - infinite cycle
+    virtual int ReflectBeam(QLineF&, QPolygonF&) const;
+
+    virtual bool IntersectWithBeam(const QLineF& beam, QPointF& intersection_point, qreal& angle) const;
+
+    virtual QString class_name() const
+    {
+      return QString("GameObject");
+    }
 
 };
 

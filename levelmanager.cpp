@@ -14,7 +14,7 @@ QDomElement GameObjectToNode(QDomDocument& d, const GameObject& game_object)
 {
   QDomElement node = d.createElement("object");
 
-  node.setAttribute("type", game_object.class_name_);
+  node.setAttribute("type", game_object.class_name());
   node.setAttribute("X", game_object.center_.x());
   node.setAttribute("Y", game_object.center_.y());
 
@@ -59,6 +59,20 @@ QPointF GetElementPoint(const QDomElement& element)
   return QPointF(element.attribute("X", "").toDouble(), element.attribute("Y", "").toDouble());
 }
 
+GameObject* StringToObject(QString class_name)
+{
+  if (class_name == "Reflector")
+    return new Reflector();
+
+  if (class_name == "Absorber")
+    return new Absorber();
+
+  if (class_name == "GameObject")
+    return new GameObject();
+
+  return NULL;
+}
+
 int LevelManager::ReadLevel(const QString& file_name, Level& level)
 {
   QFile file(file_name);
@@ -86,9 +100,7 @@ int LevelManager::ReadLevel(const QString& file_name, Level& level)
 
     if (!object_element.isNull())
     {
-      GameObject *game_object = NULL;
-      if (object_element.attribute("type", "") == "GameObject")
-        game_object = new GameObject();
+      GameObject *game_object = StringToObject(object_element.attribute("type", ""));
 
       if (!game_object)
         continue;
@@ -122,14 +134,14 @@ Level LevelManager::create_test_level()
 {
   Level test_level;
   test_level.name_ = "Test_Level";
-  GameObject* reflector = new GameObject();
-  reflector->center_ = QPointF(1.0, 1.0);
-  reflector->body_.push_back(QPointF(50, 30));
-  reflector->body_.push_back(QPointF(10, 40));
-  reflector->body_.push_back(QPointF(90, 20));
-  reflector->body_.push_back(QPointF(50, 30));
+  GameObject* reflector = new Reflector();
+  reflector->center_ = QPointF(0.0, 0.0);
+  reflector->body_.push_back(QPointF(10, 10));
+  reflector->body_.push_back(QPointF(10, 100));
+  reflector->body_.push_back(QPointF(100, 100));
+  reflector->body_.push_back(QPointF(100, 10));
 
-  GameObject* absorber = new GameObject();
+  GameObject* absorber = new Absorber();
   absorber->center_ = QPointF(3.0, -1.0);
   absorber->body_.push_back(QPointF(0, 240));
   absorber->body_.push_back(QPointF(30, 130));
