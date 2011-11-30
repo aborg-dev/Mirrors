@@ -134,21 +134,23 @@ Level LevelManager::create_test_level()
 {
   Level test_level;
   test_level.name_ = "Test_Level";
-  GameObject* reflector = new Reflector();
-  reflector->center_ = QPointF(0.0, 0.0);
-  reflector->body_.push_back(QPointF(10, 10));
-  reflector->body_.push_back(QPointF(10, 100));
-  reflector->body_.push_back(QPointF(100, 100));
-  reflector->body_.push_back(QPointF(100, 10));
+  int w = 200, h = 400;
+  for(int i = 0; i < 3; i++)
+  {
+    GameObject* reflector = new Reflector();
+    reflector->center_ = QPointF(0.0, 0.0);
+    for(int point_count = 0; point_count < 3; point_count++)
+      reflector->body_.push_back(QPointF(qrand()%w, qrand()%h));
+    test_level.objects_.push_back(reflector);
+  }
 
-  GameObject* absorber = new Absorber();
-  absorber->center_ = QPointF(3.0, -1.0);
-  absorber->body_.push_back(QPointF(0, 240));
-  absorber->body_.push_back(QPointF(30, 130));
-  absorber->body_.push_back(QPointF(50, 230));
+//  GameObject* absorber = new Absorber();
+//  absorber->center_ = QPointF(3.0, -1.0);
+//  absorber->body_.push_back(QPointF(0, 240));
+//  absorber->body_.push_back(QPointF(30, 130));
+//  absorber->body_.push_back(QPointF(50, 230));
 
-  test_level.objects_.push_back(reflector);
-  test_level.objects_.push_back(absorber);
+//  test_level.objects_.push_back(absorber);
 
   return test_level;
 }

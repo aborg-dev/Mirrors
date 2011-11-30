@@ -29,7 +29,7 @@ public:
     // 1 - intersect
     // 2 - absorb
     // 3 - infinite cycle
-    virtual int ReflectBeam(QLineF&, QPolygonF&) const;
+    virtual int ReflectBeam(QLineF&, QPolygonF&, qreal&) const;
 
     virtual bool IntersectWithBeam(const QLineF& beam, QPointF& intersection_point, qreal& angle) const;
 

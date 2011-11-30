@@ -8,6 +8,7 @@ GraphWidget::GraphWidget(QWidget *parent) :
     QGraphicsView(parent)
 {
   level_manager_ = new LevelManager();
+  beam_item_ = 0;
 
   Level test_level = level_manager_->create_test_level();
 
@@ -43,6 +44,24 @@ void GraphWidget::LoadMainLevel(const Level& main_level)
   }
 }
 
+void GraphWidget::AddBeam(const QPolygonF &beamPath)
+{
+  if (beam_item_)
+    RemoveBeam();
+  QPainterPath painter_path;
+  painter_path.addPolygon(beamPath);
+  beam_item_ = scene->addPath(painter_path);
+}
+
+void GraphWidget::RemoveBeam()
+{
+  if (!beam_item_)
+    return;
+
+  scene->removeItem(beam_item_);
+  beam_item_ = 0;
+}
+
 void GraphWidget::keyPressEvent(QKeyEvent *event)
 {
   switch (event->key()) {
@@ -53,11 +72,13 @@ void GraphWidget::keyPressEvent(QKeyEvent *event)
   {
     int w = trunc(scene->width());
     int h = trunc(scene->width());
-    main_level_->SendBeam(*scene, QLineF(qrand()%w, qrand()%h, qrand()%w, qrand()%h));
+    QPolygonF beamPath;
+    main_level_->SendBeam(QLineF(w, qrand()%h, w - 80, qrand()%h), beamPath);
+    AddBeam(beamPath);
     break;
   }
   case Qt::Key_Backspace:
-    main_level_->RemoveLastBeam(*scene);
+    RemoveBeam();
   default:
     QGraphicsView::keyPressEvent(event);
   }

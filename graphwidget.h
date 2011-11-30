@@ -11,8 +11,9 @@ class GraphWidget : public QGraphicsView
 public:
     explicit GraphWidget(QWidget *parent = 0);
 
-    void itemMoved();
-    void sendBeam(QLineF beam);
+    void ItemMoved();
+    void AddBeam(const QPolygonF& beamPath);
+    void RemoveBeam();
     void LoadMainLevel(const Level& main_level);
 
 protected:
@@ -20,6 +21,8 @@ protected:
     LevelManager* level_manager_;
     QGraphicsScene* scene;
     Level* main_level_;
+    QGraphicsPathItem *beam_item_;
+
     //void timerEvent(QTimerEvent *event);
     //void drawBackground(QPainter *painter, const QRectF &rect);
 

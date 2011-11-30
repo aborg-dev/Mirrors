@@ -14,13 +14,10 @@ public:
 
     QString name_;
     QVector<GameObject*> objects_;
-    QGraphicsLineItem* beam_item_;
 
-    void SendBeam(QGraphicsScene& scene, const QLineF& beam);
+    void SendBeam(QLineF beam, QPolygonF& beamPath);
 
     static void LoadMainLevel(GraphWidget* graph_widget, const Level& level);
-
-    void RemoveLastBeam(QGraphicsScene& scene);
 };
 
 #endif // LEVEL_H

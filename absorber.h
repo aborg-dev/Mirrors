@@ -10,7 +10,7 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    int ReflectBeam(const QLineF& beam, QPolygonF& beamPath) const;
+    int ReflectBeam(const QLineF& beam, QPolygonF& beamPath, qreal& distance) const;
 
     QString class_name() const
     {

@@ -4,6 +4,8 @@
 #include <QPainterPath>
 #include <QVector2D>
 
+#include <iostream>
+
 static const double Pi = 3.14159265358979323846264338327950288419717;
 static double TwoPi = 2.0 * Pi;
 
@@ -62,8 +64,8 @@ bool GameObject::IntersectWithBeam(const QLineF &beam, QPointF &intersection_poi
       if ((diff1.x() * diff2.x() > 0) || (diff1.y() * diff2.y() > 0))
         continue;
 
-      diff1 = QVector2D(intersection_point - beam.p1());
-      diff2 = QVector2D(intersection_point - beam.p2());
+      diff1 = QVector2D(current_intersection - beam.p1());
+      diff2 = QVector2D(current_intersection - beam.p2());
 
       if (diff1.length() < diff2.length())
         continue;
@@ -80,20 +82,25 @@ bool GameObject::IntersectWithBeam(const QLineF &beam, QPointF &intersection_poi
   return (nearest_length < 1e9);
 }
 
-int GameObject::ReflectBeam(QLineF &beam, QPolygonF& beamPath) const
+int GameObject::ReflectBeam(QLineF &beam, QPolygonF& beamPath, qreal& distance) const
 {
+  beam.setLength(1);
   QPointF intersection_point;
   beamPath.clear();
   int iterations = 0;
   qreal angle = 0.0;
+  beamPath.push_back(beam.p1());
   while (iterations < 1000 && IntersectWithBeam(beam, intersection_point, angle))
   {
     iterations++;
+    if (iterations == 1)
+      distance = QVector2D(beam.p1() - intersection_point).length();
     beamPath.push_back(intersection_point);
     beam.setP1(intersection_point);
-    beam.setAngle(beam.angle() + Pi - 2*angle);
+    beam.setAngle(beam.angle() - 2*angle + 180);
+    beam.setLength(1);
   }
-  if (beamPath.isEmpty())
+  if (beamPath.size() == 1)
     return 0;
   if (iterations == 1000)
     return 3;
