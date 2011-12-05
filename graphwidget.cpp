@@ -9,6 +9,7 @@ GraphWidget::GraphWidget(QWidget *parent) :
 {
   level_manager_ = new LevelManager();
   beam_item_ = 0;
+  beam_ = 0;
 
   Level test_level = level_manager_->create_test_level();
 
@@ -44,6 +45,15 @@ void GraphWidget::LoadMainLevel(const Level& main_level)
   }
 }
 
+void GraphWidget::PaintBeam()
+{
+  if (!beam_)
+    return;
+  QPolygonF beamPath;
+  main_level_->SendBeam(*beam_, beamPath);
+  AddBeam(beamPath);
+}
+
 void GraphWidget::AddBeam(const QPolygonF &beamPath)
 {
   if (beam_item_)
@@ -72,9 +82,8 @@ void GraphWidget::keyPressEvent(QKeyEvent *event)
   {
     int w = trunc(scene->width());
     int h = trunc(scene->width());
-    QPolygonF beamPath;
-    main_level_->SendBeam(QLineF(w, qrand()%h, w - 80, qrand()%h), beamPath);
-    AddBeam(beamPath);
+    beam_ = new QLineF(w, qrand()%h, w - 80, qrand()%h);
+    PaintBeam();
     break;
   }
   case Qt::Key_Backspace:

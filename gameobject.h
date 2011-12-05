@@ -13,7 +13,7 @@ public:
     GameObject();
     GameObject(QPointF center, QPolygonF body);
 
-    QPointF center_;
+    QPointF offset_;
     QPolygonF body_;
     GraphWidget *graph_widget_;
 
@@ -24,6 +24,10 @@ public:
     virtual QPainterPath shape() const;
 
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
     // 0 - No intersection
     // 1 - intersect

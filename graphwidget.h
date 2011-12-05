@@ -15,6 +15,7 @@ public:
     void AddBeam(const QPolygonF& beamPath);
     void RemoveBeam();
     void LoadMainLevel(const Level& main_level);
+    void PaintBeam();
 
 protected:
     void keyPressEvent(QKeyEvent *event);
@@ -22,6 +23,7 @@ protected:
     QGraphicsScene* scene;
     Level* main_level_;
     QGraphicsPathItem *beam_item_;
+    QLineF *beam_;
 
     //void timerEvent(QTimerEvent *event);
     //void drawBackground(QPainter *painter, const QRectF &rect);

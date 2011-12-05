@@ -15,8 +15,8 @@ QDomElement GameObjectToNode(QDomDocument& d, const GameObject& game_object)
   QDomElement node = d.createElement("object");
 
   node.setAttribute("type", game_object.class_name());
-  node.setAttribute("X", game_object.center_.x());
-  node.setAttribute("Y", game_object.center_.y());
+  node.setAttribute("X", game_object.offset_.x());
+  node.setAttribute("Y", game_object.offset_.y());
 
   QDomElement body_node = d.createElement("body");
   node.appendChild(body_node);
@@ -105,7 +105,7 @@ int LevelManager::ReadLevel(const QString& file_name, Level& level)
       if (!game_object)
         continue;
 
-      game_object->center_ = GetElementPoint(object_element);
+      game_object->offset_ = GetElementPoint(object_element);
 
       QDomNode body_node = object_node.firstChild();
 
@@ -135,11 +135,11 @@ Level LevelManager::create_test_level()
   Level test_level;
   test_level.name_ = "Test_Level";
   int w = 200, h = 400;
-  for(int i = 0; i < 3; i++)
+  for(int i = 0; i < 5; i++)
   {
     GameObject* reflector = new Reflector();
-    reflector->center_ = QPointF(0.0, 0.0);
-    for(int point_count = 0; point_count < 3; point_count++)
+    reflector->offset_ = QPointF(0.0, 0.0);
+    for(int point_count = 0; point_count < 5; point_count++)
       reflector->body_.push_back(QPointF(qrand()%w, qrand()%h));
     test_level.objects_.push_back(reflector);
   }

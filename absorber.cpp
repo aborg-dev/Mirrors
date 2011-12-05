@@ -10,7 +10,7 @@ Absorber::Absorber()
 void Absorber::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
   painter->save();
-  painter->translate(center_);
+  //painter->translate(offset_);
   painter->setBrush(Qt::blue);
   painter->setPen(QPen(Qt::black, 0));
   painter->drawPolygon(body_);

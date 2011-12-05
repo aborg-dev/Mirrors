@@ -12,7 +12,7 @@ void Level::SendBeam(QLineF beam, QPolygonF& beamPath)
   beamPath.clear();
   int iterations = 0;
   beamPath.push_back(beam.p1());
-  beamPath.push_back(beam.p2());
+  //beamPath.push_back(beam.p2());
   while (iterations < 1000)
   {
     iterations++;

@@ -1,8 +1,10 @@
 #include "gameobject.h"
+#include "graphwidget.h"
 
 #include <QPainter>
 #include <QPainterPath>
 #include <QVector2D>
+#include <QGraphicsSceneMouseEvent>
 
 #include <iostream>
 
@@ -13,9 +15,9 @@ GameObject::GameObject()
 {
 }
 
-GameObject::GameObject(QPointF center, QPolygonF body)
+GameObject::GameObject(QPointF offset, QPolygonF body)
 {
-  center_ = center;
+  offset_ = offset;
   body_ = body;
 }
 
@@ -31,7 +33,7 @@ void GameObject::SetGraphWidget(GraphWidget* graph_widget)
 void GameObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *)
 {
   painter->save();
-  painter->translate(center_);
+  //painter->translate(offset_);
   painter->setBrush(Qt::darkGray);
   painter->setPen(QPen(Qt::black, 0));
   painter->drawPolygon(body_);
@@ -40,14 +42,40 @@ void GameObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 
 QRectF GameObject::boundingRect() const
 {
-    return body_.boundingRect();
+  return body_.boundingRect();
 }
 
 QPainterPath GameObject::shape() const
 {
-    QPainterPath path;
-    path.addPolygon(body_);
-    return path;
+  QPainterPath path;
+  path.addPolygon(body_);
+  return path;
+}
+
+QVariant GameObject::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+  switch (change) {
+  case ItemPositionHasChanged:
+    offset_ = value.toPointF();
+    graph_widget_->PaintBeam();
+    break;
+  default:
+    break;
+  };
+
+  return QGraphicsItem::itemChange(change, value);
+}
+
+void GameObject::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+  update();
+  QGraphicsItem::mousePressEvent(event);
+}
+
+void GameObject::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+  update();
+  QGraphicsItem::mouseReleaseEvent(event);
 }
 
 bool GameObject::IntersectWithBeam(const QLineF &beam, QPointF &intersection_point, qreal &angle) const
@@ -55,7 +83,7 @@ bool GameObject::IntersectWithBeam(const QLineF &beam, QPointF &intersection_poi
   qreal nearest_length = 1e9;
   for(int i = 0; i < body_.size(); i++)
   {
-    QLineF edge(body_.at(i), body_.at((i+1)%body_.size()));
+    QLineF edge(body_.at(i) + offset_, body_.at((i+1)%body_.size()) + offset_);
     QPointF current_intersection;
     QLineF::IntersectType result = beam.intersect(edge, &current_intersection);
     if (result == 1 || result == 2)
